@@ -1,0 +1,125 @@
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">Inicio de sesión</div>
+
+          <div class="card-body">
+            <form @submit.prevent="login()">
+
+              <div class="row mb-3">
+                <label
+                  for="email"
+                  class="col-md-4 col-form-label text-md-end"
+                  >Email</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    value=""
+                    required
+                    autocomplete="email"
+                    autofocus
+                    placeholder="Email"
+                    v-model="user.email"
+                  />
+
+                  <!-- @error('email') -->
+                  <!-- <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span> -->
+                  <!-- @enderror -->
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="password"
+                  class="col-md-4 col-form-label text-md-end"
+                  >Contraseña</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    placeholder="Contraseña"
+                    v-model="user.password"
+                  />
+
+                  <!-- @error('password')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror -->
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6 offset-md-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                    name="remember" id="remember"
+                    >
+
+                    <label class="form-check-label" for="remember">
+                      Recordar
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-primary">
+                    Inicio de sesión
+                  </button>
+
+                  <!-- @if (Route::has('password.request')) -->
+                  <a
+                    class="btn btn-link"
+                    href=""
+                  >
+                    Olvidaste tu contraseña
+                  </a>
+                  <!-- @endif -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            user: {
+                email: '',
+                password: '',
+            }
+
+        }
+    },
+    mounted() {
+        console.log("Component mounted.");
+    },
+    methods: {
+      login() {
+          console.log(this.user.email, this.user.password);
+      }
+  }
+};
+</script>
