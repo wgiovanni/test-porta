@@ -70,4 +70,15 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+    
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\Models\User
+     */
+    protected function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
 }

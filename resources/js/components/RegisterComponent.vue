@@ -4,13 +4,15 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">Registro</div>
-
           <div class="card-body">
-            <form method="POST" @submit.prevent="register()">
-
+            <div class="alert" :class="colorAlert" v-bind="showAlert">
+              {{ message }}
+            </div>
+            <form @submit.prevent="register()">
               <div class="row mb-3">
-                <label for="name" class="col-md-4 col-form-label text-md-end">Nombre</label>
-
+                <label for="name" class="col-md-4 col-form-label text-md-end"
+                  >Nombre</label
+                >
                 <div class="col-md-6">
                   <input
                     id="name"
@@ -24,22 +26,13 @@
                     v-model="user.name"
                     placeholder="Nombre"
                   />
-
-                  <!-- @error('name')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror -->
                 </div>
               </div>
 
               <div class="row mb-3">
-                <label
-                  for="email"
-                  class="col-md-4 col-form-label text-md-end"
+                <label for="email" class="col-md-4 col-form-label text-md-end"
                   >Email</label
                 >
-
                 <div class="col-md-6">
                   <input
                     id="email"
@@ -52,12 +45,6 @@
                     v-model="user.email"
                     placeholder="Email"
                   />
-
-                  <!-- @error('email')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror -->
                 </div>
               </div>
 
@@ -79,12 +66,6 @@
                     v-model="user.password"
                     placeholder="Contraseña"
                   />
-
-                  <!-- @error('password')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror -->
                 </div>
               </div>
 
@@ -126,19 +107,54 @@
 <script>
 export default {
   data() {
-      return {
-          user: {
-              name: '',
-              email: '',
-              password: '',
-              password_confirmation: ''
-          }
-      }
+    return {
+      user: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+      },
+      message: "",
+      showAlert: false,
+      colorAlert: "",
+    };
   },
   methods: {
-      register() {
-          console.log(this.user.name, this.user.email, this.user.password, this.user.password_confirmation);
-      }
-  }
+    register() {
+      let self = this;
+
+      axios
+        .post("/register", self.user)
+        .then((res) => {
+          self.clear();
+          self.message = "Usuario registrado con éxito.";
+          self.colorAlert = "alert-success";
+          self.countDownChanged();
+          window.location.href = "http://localhost/";
+        })
+        .catch(function (error) {
+          self.message = error.response.data.message + " ";
+          for (let key in error.response.data.errors) {
+            if (error.response.data.errors.hasOwnProperty(key)) {
+              self.message += error.response.data.errors[key] + "  ";
+            }
+          }
+          self.colorAlert = "alert-danger";
+          self.countDownChanged();
+        });
+    },
+    clear() {
+      this.user.name = "";
+      this.user.email = "";
+      this.user.password = "";
+      this.user.password_confirmation = "";
+    },
+    countDownChanged() {
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 7000);
+    },
+  },
 };
 </script>

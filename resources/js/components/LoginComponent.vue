@@ -6,15 +6,14 @@
           <div class="card-header">Inicio de sesión</div>
 
           <div class="card-body">
+            <div class="alert" :class="colorAlert" v-bind="showAlert">
+              {{ message }}
+            </div>
             <form @submit.prevent="login()">
-
               <div class="row mb-3">
-                <label
-                  for="email"
-                  class="col-md-4 col-form-label text-md-end"
+                <label for="email" class="col-md-4 col-form-label text-md-end"
                   >Email</label
                 >
-
                 <div class="col-md-6">
                   <input
                     id="email"
@@ -28,12 +27,6 @@
                     placeholder="Email"
                     v-model="user.email"
                   />
-
-                  <!-- @error('email') -->
-                  <!-- <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span> -->
-                  <!-- @enderror -->
                 </div>
               </div>
 
@@ -55,21 +48,18 @@
                     placeholder="Contraseña"
                     v-model="user.password"
                   />
-
-                  <!-- @error('password')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror -->
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col-md-6 offset-md-4">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                    name="remember" id="remember"
-                    >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="remember"
+                      id="remember"
+                    />
 
                     <label class="form-check-label" for="remember">
                       Recordar
@@ -83,15 +73,7 @@
                   <button type="submit" class="btn btn-primary">
                     Inicio de sesión
                   </button>
-
-                  <!-- @if (Route::has('password.request')) -->
-                  <a
-                    class="btn btn-link"
-                    href=""
-                  >
-                    Olvidaste tu contraseña
-                  </a>
-                  <!-- @endif -->
+                  <a class="btn btn-link" href=""> Olvidaste tu contraseña </a>
                 </div>
               </div>
             </form>
@@ -104,22 +86,52 @@
 
 <script>
 export default {
-    data() {
-        return {
-            user: {
-                email: '',
-                password: '',
-            }
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+      message: "",
+      showAlert: false,
+      colorAlert: "",
+    };
+  },
+  mounted() {
+    console.log("Component mounted.");
+  },
+  methods: {
+    login() {
+      let self = this;
 
-        }
+      axios
+        .post("/login", {
+          email: self.user.email,
+          password: self.user.password,
+        })
+        .then((res) => {
+          self.clear();
+          self.message = "Inicio de sesión exitoso.";
+          self.colorAlert = "alert-success";
+          self.countDownChanged();
+          window.location.href = "http://localhost/";
+        })
+        .catch(function (error) {
+          self.message = "Estas credenciales no coinciden con nuestros registros.";
+          self.colorAlert = "alert-danger";
+          self.countDownChanged();
+        });
     },
-    mounted() {
-        console.log("Component mounted.");
+    clear() {
+      this.user.email = "";
+      this.user.password = "";
     },
-    methods: {
-      login() {
-          console.log(this.user.email, this.user.password);
-      }
-  }
+    countDownChanged() {
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 7000);
+    },
+  },
 };
 </script>
