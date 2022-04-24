@@ -49,6 +49,25 @@
               </div>
 
               <div class="row mb-3">
+                <label for="email" class="col-md-4 col-form-label text-md-end"
+                  >Teléfono</label
+                >
+                <div class="col-md-6">
+                  <input
+                    id="phone"
+                    type="text"
+                    class="form-control"
+                    name="phone"
+                    value=""
+                    required
+                    autocomplete="phone"
+                    v-model="user.phone"
+                    placeholder="Teléfono"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
                 <label
                   for="password"
                   class="col-md-4 col-form-label text-md-end"
@@ -111,6 +130,7 @@ export default {
       user: {
         name: "",
         email: "",
+        phone: "",
         password: "",
         password_confirmation: "",
       },
@@ -122,7 +142,6 @@ export default {
   methods: {
     register() {
       let self = this;
-
       axios
         .post("/register", self.user)
         .then((res) => {
@@ -146,6 +165,7 @@ export default {
     clear() {
       this.user.name = "";
       this.user.email = "";
+      this.user.phone = "";
       this.user.password = "";
       this.user.password_confirmation = "";
     },

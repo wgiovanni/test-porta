@@ -5656,12 +5656,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       user: {
         name: "",
         email: "",
+        phone: "",
         password: "",
         password_confirmation: ""
       },
@@ -5673,6 +5693,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     register: function register() {
       var self = this;
+      console.log(self.user);
       axios.post("/register", self.user).then(function (res) {
         self.clear();
         self.message = "Usuario registrado con éxito.";
@@ -5695,6 +5716,7 @@ __webpack_require__.r(__webpack_exports__);
     clear: function clear() {
       this.user.name = "";
       this.user.email = "";
+      this.user.phone = "";
       this.user.password = "";
       this.user.password_confirmation = "";
     },
@@ -28790,6 +28812,49 @@ var render = function () {
                             return
                           }
                           _vm.$set(_vm.user, "email", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-md-4 col-form-label text-md-end",
+                      attrs: { for: "email" },
+                    },
+                    [_vm._v("Teléfono")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.phone,
+                          expression: "user.phone",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "phone",
+                        type: "text",
+                        name: "phone",
+                        value: "",
+                        required: "",
+                        autocomplete: "phone",
+                        placeholder: "Teléfono",
+                      },
+                      domProps: { value: _vm.user.phone },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "phone", $event.target.value)
                         },
                       },
                     }),
