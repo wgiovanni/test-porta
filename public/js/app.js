@@ -5512,12 +5512,12 @@ __webpack_require__.r(__webpack_exports__);
         password: self.user.password
       }).then(function (res) {
         self.clear();
-        self.message = "Inicio de sesión exitoso.";
+        self.message = res.data.message;
         self.colorAlert = "alert-success";
         self.countDownChanged();
         window.location.href = "http://localhost/";
       })["catch"](function (error) {
-        self.message = "Estas credenciales no coinciden con nuestros registros.";
+        self.message = error.response.data.message;
         self.colorAlert = "alert-danger";
         self.countDownChanged();
       });
@@ -5709,14 +5709,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     register: function register() {
-      var self = this; // console.log(self.user);
-
-      var formData = new FormData(); // formData.append("file", this.file);
+      var self = this;
+      var formData = new FormData();
 
       _.each(self.user, function (value, key) {
         formData.append(key, value);
-      }); // return false;
-
+      });
 
       axios.post("/register", formData, {
         headers: {
@@ -5726,7 +5724,8 @@ __webpack_require__.r(__webpack_exports__);
         self.clear();
         self.message = "Usuario registrado con éxito.";
         self.colorAlert = "alert-success";
-        self.countDownChanged(); // window.location.href = "http://localhost/";
+        self.countDownChanged();
+        window.location.href = "http://localhost/";
       })["catch"](function (error) {
         self.message = error.response.data.message + " ";
 
@@ -5756,7 +5755,6 @@ __webpack_require__.r(__webpack_exports__);
       }, 7000);
     },
     onImageChange: function onImageChange(e) {
-      // this. = event[0];
       this.user.avatar = e.target.files[0];
     }
   }
