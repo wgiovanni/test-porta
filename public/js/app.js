@@ -5675,6 +5675,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5683,7 +5699,8 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         phone: "",
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
+        avatar: ""
       },
       message: "",
       showAlert: false,
@@ -5692,14 +5709,24 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     register: function register() {
-      var self = this;
-      console.log(self.user);
-      axios.post("/register", self.user).then(function (res) {
+      var self = this; // console.log(self.user);
+
+      var formData = new FormData(); // formData.append("file", this.file);
+
+      _.each(self.user, function (value, key) {
+        formData.append(key, value);
+      }); // return false;
+
+
+      axios.post("/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (res) {
         self.clear();
         self.message = "Usuario registrado con éxito.";
         self.colorAlert = "alert-success";
-        self.countDownChanged();
-        window.location.href = "http://localhost/";
+        self.countDownChanged(); // window.location.href = "http://localhost/";
       })["catch"](function (error) {
         self.message = error.response.data.message + " ";
 
@@ -5727,6 +5754,10 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         _this.showAlert = false;
       }, 7000);
+    },
+    onImageChange: function onImageChange(e) {
+      // this. = event[0];
+      this.user.avatar = e.target.files[0];
     }
   }
 });
@@ -28945,6 +28976,30 @@ var render = function () {
                           )
                         },
                       },
+                    }),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-md-4 col-form-label text-md-end",
+                      attrs: { for: "avatar" },
+                    },
+                    [_vm._v("Imagen de perfil")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "avatar",
+                        type: "file",
+                        name: "avatar",
+                        accept: "image/*",
+                      },
+                      on: { change: _vm.onImageChange },
                     }),
                   ]),
                 ]),

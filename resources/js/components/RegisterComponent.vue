@@ -108,6 +108,22 @@
                   />
                 </div>
               </div>
+              <div class="row mb-3">
+                <label for="avatar" class="col-md-4 col-form-label text-md-end"
+                  >Imagen de perfil</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="avatar"
+                    type="file"
+                    class="form-control"
+                    name="avatar"
+                    accept="image/*"
+                    v-on:change="onImageChange"
+                  />
+                </div>
+              </div>
 
               <div class="row mb-0">
                 <div class="col-md-6 offset-md-4">
@@ -133,6 +149,7 @@ export default {
         phone: "",
         password: "",
         password_confirmation: "",
+        avatar: "",
       },
       message: "",
       showAlert: false,
@@ -142,8 +159,17 @@ export default {
   methods: {
     register() {
       let self = this;
+      let formData = new FormData();
+
+      _.each(self.user, (value, key) => {
+        formData.append(key, value);
+      });
       axios
-        .post("/register", self.user)
+        .post("/register", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
           self.clear();
           self.message = "Usuario registrado con éxito.";
@@ -174,6 +200,9 @@ export default {
       setTimeout(() => {
         this.showAlert = false;
       }, 7000);
+    },
+    onImageChange(e) {
+      this.user.avatar = e.target.files[0];
     },
   },
 };

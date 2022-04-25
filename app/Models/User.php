@@ -23,6 +23,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'date_last_session',
+        'avatar_url',
     ];
 
     /**
