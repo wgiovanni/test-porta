@@ -5512,12 +5512,12 @@ __webpack_require__.r(__webpack_exports__);
         password: self.user.password
       }).then(function (res) {
         self.clear();
-        self.message = res.data.message;
+        self.message = "Inicio de sesión exitoso.";
         self.colorAlert = "alert-success";
         self.countDownChanged();
         window.location.href = "http://localhost/";
       })["catch"](function (error) {
-        self.message = error.response.data.message;
+        self.message = "Estas credenciales no coinciden con nuestros registros.";
         self.colorAlert = "alert-danger";
         self.countDownChanged();
       });

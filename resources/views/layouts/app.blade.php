@@ -52,12 +52,9 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <img src="{{ Auth::user()->avatar_url }}" alt="" width="10%">
-                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    <img src="{{ Auth::user()->avatar_url }}" width="40" height="40" class="rounded-circle">{{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
