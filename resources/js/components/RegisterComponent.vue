@@ -121,6 +121,7 @@
                     name="avatar"
                     accept="image/*"
                     v-on:change="onImageChange"
+                    required
                   />
                 </div>
               </div>
