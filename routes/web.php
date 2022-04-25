@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 // LOGIN
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('loginForm');
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('loginForm');
 
 // REGISTER
 Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
